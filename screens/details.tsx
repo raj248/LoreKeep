@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Alert } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
 import { Image } from 'expo-image';
 
+import { useSeriesStore } from "store/store";
+
 import { RootStackParamList } from '../navigation';
-import { Series } from "~/data/mockSeriesData";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
 
 type DetailsScreenRouteProp = RouteProp<RootStackParamList, 'Details'>;
 type DetailsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Details'>;
@@ -15,7 +15,7 @@ export default function Detail() {
   const navigation = useNavigation<DetailsScreenNavigationProp>();
   const router = useRoute<DetailsScreenRouteProp>();
   const { series } = router.params; // Get series data from navigation
-
+  const { deleteSeries } = useSeriesStore();
   const handleDelete = async () => {
     Alert.alert("Confirm", "Are you sure you want to delete this series?", [
       { text: "Cancel", style: "cancel" },
@@ -24,10 +24,7 @@ export default function Detail() {
         style: "destructive",
         onPress: async () => {
           try {
-            const savedSeries = await AsyncStorage.getItem("seriesList");
-            let seriesList = savedSeries ? JSON.parse(savedSeries) : [];
-            seriesList = seriesList.filter((item: Series) => item.id !== series.id);
-            await AsyncStorage.setItem("seriesList", JSON.stringify(seriesList));
+            deleteSeries(series.id);
             navigation.goBack();
           } catch (error) {
             Alert.alert("Error", "Failed to delete series.");
@@ -36,12 +33,20 @@ export default function Detail() {
       },
     ]);
   };
+  const blurhash =
+    '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
+
 
   return (
     <View className="flex-1 bg-gray-900 p-4">
       {/* Cover Image */}
-      <Image source={{ uri: series.coverImage }} className="w-full h-60 rounded-lg mb-4" />
+      <Image source={series.coverImage}
+        style={{ width: "100%", height: 300, borderRadius: 10 }}
+        contentFit="contain"
+        className="mb-4"
+        placeholder={{ blurhash }}
 
+      />
       {/* Series Title */}
       <Text className="text-white text-2xl font-bold mb-2">{series.title}</Text>
       <Text className="text-gray-400 text-lg mb-2">{series.type}</Text>

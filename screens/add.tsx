@@ -1,11 +1,12 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import uuid from "react-native-uuid";
+import { useSeriesStore } from "store/store";
 
 export default function AddSeries() {
+  const { addSeries } = useSeriesStore();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [coverImage, setCoverImage] = useState("");
@@ -36,7 +37,7 @@ export default function AddSeries() {
       title,
       type,
       author,
-      coverImage: coverImage || "https://picsum.photos/seed/picsum/200/300",
+      coverImage: coverImage,
       chaptersReleased: Number(chaptersReleased) || 0,
       chaptersRead: Number(chaptersRead) || 0,
       volumesReleased: Number(volumesReleased) || 0,
@@ -45,10 +46,7 @@ export default function AddSeries() {
     };
 
     try {
-      const savedSeries = await AsyncStorage.getItem("seriesList");
-      const seriesList = savedSeries ? JSON.parse(savedSeries) : [];
-      seriesList.push(newSeries);
-      await AsyncStorage.setItem("seriesList", JSON.stringify(seriesList));
+      addSeries(newSeries)
       navigation.goBack();
     } catch (error) {
       Alert.alert("Error", "Failed to save series");
@@ -75,7 +73,7 @@ export default function AddSeries() {
 
         <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" placeholder="Author" placeholderTextColor="#ccc" value={author} onChangeText={setAuthor} />
 
-        <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" placeholder="Image Link" placeholderTextColor="#ccc" value={coverImage} onChangeText={setCoverImage} />
+        <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" multiline={true} placeholder="Image Link" placeholderTextColor="#ccc" value={coverImage} onChangeText={setCoverImage} />
 
         <TouchableOpacity className="bg-gray-700 p-3 rounded-md mb-3 items-center">
           <Text className="text-white">Upload Cover Image</Text>

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Route, RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { Series } from "~/data/mockSeriesData";
+import { Series, useSeriesStore } from "store/store";
 import { RootStackParamList } from "navigation";
 import { StackNavigationProp } from "@react-navigation/stack";
 
@@ -12,6 +12,7 @@ type EditSeriesNavigationProp = StackNavigationProp<RootStackParamList, "EditSer
 export default function EditSeries() {
   const navigation = useNavigation<EditSeriesNavigationProp>();
   const route = useRoute<EditSeriesRouteProp>();
+  const { updateSeries } = useSeriesStore()
   const { series } = route.params; // Get series data from navigation
 
   const [title, setTitle] = useState(series.title);
@@ -20,6 +21,7 @@ export default function EditSeries() {
   const [chaptersRead, setChaptersRead] = useState(series.chaptersRead.toString());
   const [volumesReleased, setVolumesReleased] = useState(series.volumesReleased?.toString() || "");
   const [volumesRead, setVolumesRead] = useState(series.volumesRead?.toString() || "");
+  const [coverImage, setCoverImage] = useState(series.coverImage);
   const [website, setWebsite] = useState(series.website);
 
   const [open, setOpen] = useState(false);
@@ -43,6 +45,7 @@ export default function EditSeries() {
       title,
       type,
       author,
+      coverImage,
       chaptersReleased: parseInt(chaptersReleased) || 0,
       chaptersRead: parseInt(chaptersRead) || 0,
       volumesReleased: parseInt(volumesReleased) || 0,
@@ -51,10 +54,7 @@ export default function EditSeries() {
     };
 
     try {
-      const savedSeries = await AsyncStorage.getItem("seriesList");
-      let seriesList = savedSeries ? JSON.parse(savedSeries) : [];
-      seriesList = seriesList.map((item: Series) => (item.id === series.id ? updatedSeries : item));
-      await AsyncStorage.setItem("seriesList", JSON.stringify(seriesList));
+      updateSeries(updatedSeries)
       navigation.goBack();
     } catch (error) {
       Alert.alert("Error", "Failed to save changes.");
@@ -77,12 +77,13 @@ export default function EditSeries() {
           dropDownContainerStyle={{ backgroundColor: "#444", marginBottom: 12 }}
           textStyle={{ color: "white" }}
         />
-        <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" placeholder="Author" placeholderTextColor="#ccc" value={author} onChangeText={setAuthor} />
+        <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3 mt-3" placeholder="Author" placeholderTextColor="#ccc" value={author} onChangeText={setAuthor} />
         <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" placeholder="Chapters Released" placeholderTextColor="#ccc" keyboardType="numeric" value={chaptersReleased} onChangeText={setChaptersReleased} />
         <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" placeholder="Chapters Read" placeholderTextColor="#ccc" keyboardType="numeric" value={chaptersRead} onChangeText={setChaptersRead} />
         <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" placeholder="Volumes Released (Optional)" placeholderTextColor="#ccc" keyboardType="numeric" value={volumesReleased} onChangeText={setVolumesReleased} />
         <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" placeholder="Volumes Read (Optional)" placeholderTextColor="#ccc" keyboardType="numeric" value={volumesRead} onChangeText={setVolumesRead} />
-        <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" placeholder="Website Link" placeholderTextColor="#ccc" value={website} onChangeText={setWebsite} />
+        <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" multiline={true} placeholder="Cover Image" placeholderTextColor="#ccc" value={coverImage} onChangeText={setCoverImage} />
+        <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" multiline={true} placeholder="Website Link" placeholderTextColor="#ccc" value={website} onChangeText={setWebsite} />
 
         <View className="flex-row justify-between mt-4">
           <TouchableOpacity className="flex-1 bg-gray-600 p-4 rounded-md items-center mr-2" onPress={() => navigation.goBack()}>
