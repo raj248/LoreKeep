@@ -24,7 +24,7 @@ export default function RootStack() {
   return (
     <NavigationContainer>
       <StatusBar barStyle="light-content" backgroundColor="#6200EE" />
-      <Stack.Navigator initialRouteName="Home" screenOptions={
+      <Stack.Navigator initialRouteName="Overview" screenOptions={
         {
           headerStyle: {
             backgroundColor: '#f45ffe',

@@ -1,4 +1,4 @@
-{
+export default {
   "expo": {
     "name": "lorekeep",
     "slug": "lorekeep",
@@ -38,7 +38,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.shashankraj007281.lorekeep"
+      "package": "com.shashankraj007281.lorekeep",
+      "googleServicesFile": process.env.GOOGLE_SERVICES_FILE
     },
     "extra": {
       "eas": {

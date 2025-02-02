@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "950920676991",
+    "project_id": "lorekeep-ef179",
+    "storage_bucket": "lorekeep-ef179.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950920676991:android:ff888d7bb311202152e14a",
+        "android_client_info": {
+          "package_name": "com.shashankraj007281.lorekeep"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "950920676991-i04bo1l5on40d7unrfe65bfc3kprrd2i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shashankraj007281.lorekeep",
+            "certificate_hash": "cede74b75aee340ce62d57e0d7a097303344df03"
+          }
+        },
+        {
+          "client_id": "950920676991-t7ug3u1ft9cdri8jfeb08fmmcvefgdu4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCngu-_sa6p-IPZNWNt9bzyB_AzffhJnOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "950920676991-t7ug3u1ft9cdri8jfeb08fmmcvefgdu4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
