@@ -16,11 +16,9 @@ export default function Overview() {
       <ScreenContent path="screens/overview.tsx" title="Overview" />
       <Button
         onPress={() =>
-          navigation.navigate('Details', {
-            name: 'Dan',
-          })
+          navigation.navigate('Home')
         }
-        title="Show Details"
+        title="Home"
       />
     </View>
   );
