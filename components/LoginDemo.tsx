@@ -21,8 +21,9 @@ export const LoginDemo = () => {
     try {
       await GoogleSignin.hasPlayServices();
       const user = await GoogleSignin.signIn();
+      const tokens = await GoogleSignin.getTokens();
       setUserInfo(user);
-      console.log(user.data);
+      // console.log(JSON.stringify(tokens));
     } catch (error: any) {
       setError(error);
     }
