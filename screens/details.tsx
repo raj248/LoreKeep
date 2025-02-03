@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, Alert } from "react-native";
 import { Image } from 'expo-image';
 
-import { useSeriesStore } from "store/store";
+import { useSeriesStore } from "store/SeriesStore";
 
 import { RootStackParamList } from '../navigation';
 import { StackNavigationProp } from "@react-navigation/stack";

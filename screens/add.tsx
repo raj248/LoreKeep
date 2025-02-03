@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import uuid from "react-native-uuid";
-import { useSeriesStore } from "store/store";
+import { useSeriesStore } from "store/SeriesStore";
 
 export default function AddSeries() {
   const { addSeries } = useSeriesStore();

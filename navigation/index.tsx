@@ -7,7 +7,7 @@ import Overview from '../screens/overview';
 import Home from '../screens/home';
 import AddSeries from 'screens/add';
 import { StatusBar } from 'react-native';
-import { Series } from 'store/store';
+import { Series } from 'store/SeriesStore';
 import EditSeries from 'screens/edit';
 
 export type RootStackParamList = {

@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from "reac
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { Series, useSeriesStore } from "store/store";
+import { Series, useSeriesStore } from "store/SeriesStore";
 import { RootStackParamList } from "navigation";
 import { StackNavigationProp } from "@react-navigation/stack";
 

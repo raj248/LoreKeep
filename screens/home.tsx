@@ -4,7 +4,7 @@ import { Feather } from "@expo/vector-icons";
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from 'navigation';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Series, useSeriesStore } from 'store/store';
+import { Series, useSeriesStore } from 'store/SeriesStore';
 import { Image } from 'expo-image';
 
 type HomeScreenNavigationProps = StackNavigationProp<RootStackParamList, 'Home'>;
