@@ -1,11 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert } from "react-native";
+import { View, TextInput, TouchableOpacity, Alert } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import uuid from "react-native-uuid";
 import { useSeriesStore } from "store/SeriesStore";
+import { useTheme, Button, Surface, Text } from "react-native-paper";
 
 export default function AddSeries() {
+  const { colors } = useTheme();
   const { addSeries } = useSeriesStore();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -53,11 +55,17 @@ export default function AddSeries() {
     }
   };
   return (
-    <View className="flex-1 bg-gray-900 p-4">
+    <View className="flex-1 p-4" style={{ backgroundColor: colors.background }}>
       <View>
-        <Text className="text-white text-2xl font-bold mb-4">Add New Series</Text>
+        <Text className="text-2xl font-bold text-center mb-4">Add New Series</Text>
 
-        <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" placeholder="Title" placeholderTextColor="#ccc" value={title} onChangeText={setTitle} />
+        <TextInput
+          className="p-3 rounded-md mb-3"
+          style={{ backgroundColor: colors.surfaceVariant, color: colors.onBackground }}
+          placeholder="Title"
+          placeholderTextColor={colors.onBackground}
+          value={title}
+          onChangeText={setTitle} />
 
         <DropDownPicker
           open={open}
@@ -66,32 +74,86 @@ export default function AddSeries() {
           setOpen={setOpen}
           setValue={setType}
           setItems={setItems}
-          style={{ backgroundColor: "#333", marginBottom: 12 }}
-          dropDownContainerStyle={{ backgroundColor: "#444" }}
-          textStyle={{ color: "white" }}
+          style={{ backgroundColor: colors.surfaceVariant, marginBottom: 12 }}
+          dropDownContainerStyle={{ backgroundColor: colors.surfaceVariant }}
+          textStyle={{ color: colors.onBackground }}
         />
 
-        <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" placeholder="Author" placeholderTextColor="#ccc" value={author} onChangeText={setAuthor} />
+        <TextInput
+          className="p-3 rounded-md mb-3"
+          style={{ backgroundColor: colors.surfaceVariant, color: colors.onBackground }}
+          placeholder="Author"
+          placeholderTextColor={colors.onBackground}
+          value={author}
+          onChangeText={setAuthor}
+        />
 
-        <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" multiline={true} placeholder="Image Link" placeholderTextColor="#ccc" value={coverImage} onChangeText={setCoverImage} />
+        <TextInput
+          className="p-3 rounded-md mb-3"
+          style={{ backgroundColor: colors.surfaceVariant, color: colors.onBackground }}
+          multiline={true}
+          placeholder="Image Link"
+          placeholderTextColor={colors.onBackground}
+          value={coverImage}
+          onChangeText={setCoverImage}
+        />
 
-        <TouchableOpacity className="bg-gray-700 p-3 rounded-md mb-3 items-center">
-          <Text className="text-white">Upload Cover Image</Text>
-        </TouchableOpacity>
+        <TextInput
+          className="p-3 rounded-md mb-3"
+          style={{ backgroundColor: colors.surfaceVariant, color: colors.onBackground }}
+          placeholder="Chapters Released"
+          placeholderTextColor={colors.onBackground}
+          keyboardType="numeric"
+          value={chaptersReleased}
+          onChangeText={setChaptersReleased}
+        />
 
-        <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" placeholder="Chapters Released" placeholderTextColor="#ccc" keyboardType="numeric" value={chaptersReleased} onChangeText={setChaptersReleased} />
-        <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" placeholder="Chapters Read" placeholderTextColor="#ccc" keyboardType="numeric" value={chaptersRead} onChangeText={setChaptersRead} />
-        <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" placeholder="Volumes Released (Optional)" placeholderTextColor="#ccc" keyboardType="numeric" value={volumesReleased} onChangeText={setVolumesReleased} />
-        <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" placeholder="Volumes Read (Optional)" placeholderTextColor="#ccc" keyboardType="numeric" value={volumesRead} onChangeText={setVolumesRead} />
-        <TextInput className="bg-gray-800 text-white p-3 rounded-md mb-3" placeholder="Website Link" placeholderTextColor="#ccc" value={website} onChangeText={setWebsite} />
+        <TextInput
+          className="p-3 rounded-md mb-3"
+          style={{ backgroundColor: colors.surfaceVariant, color: colors.onBackground }}
+          placeholder="Chapters Read"
+          placeholderTextColor={colors.onBackground}
+          keyboardType="numeric"
+          value={chaptersRead}
+          onChangeText={setChaptersRead}
+        />
 
-        <View className="flex-row justify-between mt-4">
-          <TouchableOpacity className="flex-1 bg-gray-600 p-4 rounded-md items-center mr-2" onPress={() => navigation.goBack()}>
-            <Text className="text-white">Cancel</Text>
-          </TouchableOpacity>
-          <TouchableOpacity className="flex-1 bg-blue-600 p-4 rounded-md items-center ml-2" onPress={handleSave}>
-            <Text className="text-white font-bold">Save</Text>
-          </TouchableOpacity>
+        <TextInput
+          className="p-3 rounded-md mb-3"
+          style={{ backgroundColor: colors.surfaceVariant, color: colors.onBackground }}
+          placeholder="Volumes Released (Optional)"
+          placeholderTextColor={colors.onBackground}
+          keyboardType="numeric"
+          value={volumesReleased}
+          onChangeText={setVolumesReleased}
+        />
+
+        <TextInput
+          className="p-3 rounded-md mb-3"
+          style={{ backgroundColor: colors.surfaceVariant, color: colors.onBackground }}
+          placeholder="Volumes Read (Optional)"
+          placeholderTextColor={colors.onBackground}
+          keyboardType="numeric"
+          value={volumesRead}
+          onChangeText={setVolumesRead}
+        />
+
+        <TextInput
+          className="p-3 rounded-md mb-3"
+          style={{ backgroundColor: colors.surfaceVariant, color: colors.onBackground }}
+          placeholder="Website Link"
+          placeholderTextColor={colors.onBackground}
+          value={website}
+          onChangeText={setWebsite}
+        />
+
+        <View className="flex-row justify-around mt-4">
+          <Button mode="contained" onPress={() => navigation.goBack()}>
+            Cancel
+          </Button>
+          <Button mode="contained" onPress={handleSave}>
+            Save
+          </Button>
         </View>
       </View>
     </View>

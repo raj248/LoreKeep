@@ -42,9 +42,10 @@ const useAuthStore = create<AuthState>((set) => ({
           accessToken: tokens.accessToken,
         })
       );
-
+      console.log(userInfo.data);
     } catch (error) {
       set({ error: error as Error, isLoading: false });
+      console.log(error);
     }
   },
 
@@ -79,6 +80,9 @@ const useAuthStore = create<AuthState>((set) => ({
           accessToken: userInfo.accessToken,
           isLoading: false
         });
+        console.log("loaded user" + userInfo.user);
+      } else {
+        set({ isLoading: false, error: null });
       }
     } catch (error) {
       set({ error: error as Error, isLoading: false });

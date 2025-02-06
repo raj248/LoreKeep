@@ -1,18 +1,19 @@
+import { View, FlatList, TouchableOpacity, TextInput } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { View, Text, FlatList, TouchableOpacity, TextInput } from 'react-native'
-import { Feather } from "@expo/vector-icons";
-import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from 'navigation';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { Feather } from "@expo/vector-icons";
 import { Series, useSeriesStore } from 'store/SeriesStore';
 import { Image } from 'expo-image';
+import { Surface, Text, useTheme } from 'react-native-paper';
 
 type HomeScreenNavigationProps = StackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function Home() {
+  const { colors } = useTheme();
   const { seriesList, loadSeries } = useSeriesStore()
   const navigation = useNavigation<HomeScreenNavigationProps>();
-  // const isFocused = useIsFocused();
   const blurhash =
     '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
@@ -21,7 +22,7 @@ export default function Home() {
   }, [])
 
   const renderItem = ({ item }: { item: Series }) => (
-    <TouchableOpacity className="flex-row items-center bg-gray-800 p-3 rounded-md mb-3"
+    <TouchableOpacity className="flex-row items-center p-3 rounded-md mb-3"
       onPress={() => navigation.navigate("Details", { series: item })}
     >
       <Image source={item.coverImage}
@@ -32,9 +33,9 @@ export default function Home() {
         className="w-16 h-24 rounded-md" />
 
       <View className="ml-4 flex-1">
-        <Text className="text-white font-bold text-lg">{item.title}</Text>
-        <Text className="text-gray-400 text-sm">{item.type}</Text>
-        <Text className="text-gray-300 text-sm">
+        <Text className="font-bold text-lg">{item.title}</Text>
+        <Text className="text-sm">{item.type}</Text>
+        <Text className="text-sm">
           Chapters Read: {item.chaptersRead}/{item.chaptersReleased}
         </Text>
       </View>
@@ -49,27 +50,34 @@ export default function Home() {
   );
 
   return (
-    <View className="flex-1 bg-gray-900 p-4">
-      <Text className="text-center text-white text-2xl font-bold mb-4">LoreKeep</Text>
+    <View className="flex-1 p-4" style={{ backgroundColor: colors.background }}>
+      <Text className="text-center text-2xl font-bold mb-4" style={{ color: colors.onBackground }}>LoreKeep</Text>
       <TextInput
-        className="w-full bg-gray-800 text-white p-3 rounded-md mb-3"
+        className="w-full p-3 rounded-md mb-3"
+        style={{ backgroundColor: colors.surfaceVariant, color: colors.onBackground }}
         placeholder="Search series..."
-        placeholderTextColor="#888"
+        placeholderTextColor={colors.onBackground}
         value={searchQuery}
         onChangeText={setSearchQuery}
       />
-      <FlatList
+      {seriesList.length ? (<FlatList
         data={filteredSeries}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
-      />
-      <TouchableOpacity className="absolute bottom-6 right-6 bg-blue-600 p-4 rounded-full shadow-lg"
+      />) : (
+        <Surface className='flex-1 justify-center items-center' elevation={0}>
+          < Text className="text-white text-center text-lg font-bold" style={{ color: colors.onSurface }}>No Series Found</Text>
+        </Surface>
+      )}
+
+      <TouchableOpacity className="absolute bottom-6 right-6 p-4 rounded-full shadow-lg"
+        style={{ backgroundColor: colors.tertiaryContainer }}
         onPress={() => { navigation.navigate("AddSeries") }}
       >
-        <Feather name="plus" size={24} color="white" />
+        <Feather name="plus" size={24} color={colors.onTertiaryContainer} />
       </TouchableOpacity>
-    </View>
+    </View >
   )
 }
 

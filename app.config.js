@@ -24,21 +24,21 @@ export default {
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#d9d9d9"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.shashankraj007281.lorekeep"
+      "bundleIdentifier": "com.crystalix.lorekeep"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.shashankraj007281.lorekeep",
+      "package": "com.crystalix.lorekeep",
       "googleServicesFile": process.env.GOOGLE_SERVICES_FILE
     },
     "extra": {
